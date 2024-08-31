@@ -4,13 +4,14 @@
     "version": "0.1",
     "description": "Makes a custom startup page",
     "permissions": [
+        "history",
         "storage",
-        "tabs"
+        "activeTab"
     ],
     "chrome_url_overrides": {
-        "newtab": "index.html"
+        "newtab": "startup.html"
     },
     "icons": {
-        "48": "icon/icon-48.png"
+        "48": "images/icon-48.png"
     }
 }

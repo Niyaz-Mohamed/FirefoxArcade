@@ -15,7 +15,6 @@
     <!--Karmatic Arcade Font (bold, highlighted text)-->
     <link href="https://fonts.cdnfonts.com/css/karmatic-arcade" rel="stylesheet">
     <!--Pixelify Sans Font (For most text)-->
-    <!--TODO: Change the font and see how it looks later-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
@@ -27,10 +26,14 @@
             <h1>Arcade</h1>
             <p>A new game with every relaod!</p>
         </div>
-        <input type="text" id="searchbar" placeholder="Search">
+        <div id="searchbar-container">
+            <input type="text" id='searchbar' placeholder="Search">
+            <div id="suggestions-list">
+            </div>
+        </div>
     </div>
     <!--Attach Scripts-->
-    <script type="module" src="./js/script.js"></script>
+    <script type="module" src="./js/search.js"></script>
 </body>
 
 </html>
