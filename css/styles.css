@@ -6,6 +6,11 @@
   --deep_red: #d86425;
   --bright_white: #efeae1;
   --rich-black: #252525;
+
+  /* Utility definitions to actually use */
+  --ui-bg-color: var(--bright_white);
+  --ui-text-color: var(--rich-black);
+  --accent-color: var(--deep_blue);
 }
 
 * {
@@ -83,15 +88,65 @@ a {
   margin: 10px;
   background-color: var(--bright_white);
   box-shadow: -5px 5px 0px 0px;
+  display: flex;
+  align-items: flex-start;
+}
+
+#toolbar span {
+  display: inline-flex;
+  align-items: center;
+  height: 1.5em;
+  padding-right: 2px;
+}
+
+#am-pm-container {
+  display: inline-flex;
+  flex-direction: column;
+  margin-right: 10px;
+}
+
+#am-pm-container span {
+  height: fit-content;
+  font-size: 0.7em;
+  padding: 0px 2px;
+}
+
+.activetime {
+  background-color: var(--rich-black);
+  color: var(--bright_white);
+  border-radius: 2px;
 }
 
 #toolbar * {
   height: 1.5em;
 }
 
+#toolbar:hover {
+  box-shadow: -5px 5px 0px 0px var(--deep_blue);
+}
+
 #toolbar a:hover,
-#toolbar button:hover {
+#toolbar svg:hover {
   color: var(--deep_blue);
+}
+
+#toolbar button {
+  color: var(--rich-black);
+}
+
+#toolbar .dropdown {
+  position: relative;
+  top: 20px;
+  right: 0px;
+  padding: 10px;
+  height: fit-content;
+  background-color: var(--bright_white);
+  box-shadow: -5px 5px 0px 0px;
+  z-index: 3;
+}
+
+#toolbar .dropdown:hover {
+  box-shadow: -5px 5px 0px 0px var(--deep_blue);
 }
 
 /*! Style the central element */
@@ -101,6 +156,7 @@ a {
   width: 50vw;
   max-width: 400px;
   z-index: 0;
+  transform: translate(0, -50px); /* Shift the center element slightly upward */
 }
 
 #center-title {
@@ -114,8 +170,18 @@ a {
   background-color: var(--bright_white);
   transform-origin: center;
   transition-duration: 100ms;
-  transform: rotate(2deg);
   box-shadow: -10px 10px 0px 2px;
+  animation: spin 2s ease-in-out infinite;
+}
+
+@keyframes spin {
+  25% {
+    transform: rotate(-5deg);
+  }
+
+  75% {
+    transform: rotate(5deg);
+  }
 }
 
 #center-title > * {
@@ -124,7 +190,6 @@ a {
 }
 
 #center-title:hover {
-  transform: rotate(5deg);
   color: var(--deep_blue);
 }
 
@@ -153,12 +218,15 @@ a {
 
 #suggestions-list {
   width: 100%;
-  margin-top: 8px;
+  margin-top: calc(
+    25px + 8px
+  ); /*TODO: Change depending on height of the searchbar*/
   background-color: var(--bright_white);
   box-shadow: -8px 0 0 0 var(--deep_blue), 8px 0 0 0 var(--deep_blue), 0 0 0 0,
     0 8px 0 0 var(--deep_blue);
   box-sizing: border-box;
   display: none;
+  position: absolute;
 }
 
 #suggestions-list .suggestion-item {
