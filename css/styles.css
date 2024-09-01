@@ -117,10 +117,6 @@ a {
   border-radius: 2px;
 }
 
-#toolbar * {
-  height: 1.5em;
-}
-
 #toolbar:hover {
   box-shadow: -5px 5px 0px 0px var(--deep_blue);
 }
@@ -130,23 +126,37 @@ a {
   color: var(--deep_blue);
 }
 
-#toolbar button {
+#toolbar > a,
+#toolbar > button {
   color: var(--rich-black);
+  position: relative;
+  height: 1.5em;
+  width: 1.5em;
 }
 
-#toolbar .dropdown {
-  position: relative;
-  top: 20px;
+.dropdown {
+  position: absolute;
+  top: calc(1.5em + 25px);
   right: 0px;
   padding: 10px;
   height: fit-content;
+  width: fit-content;
   background-color: var(--bright_white);
   box-shadow: -5px 5px 0px 0px;
+  font-size: 0.8em;
   z-index: 3;
 }
 
-#toolbar .dropdown:hover {
+.dropdown:hover {
   box-shadow: -5px 5px 0px 0px var(--deep_blue);
+}
+
+.dropdown > *:first-child {
+  margin-top: 0px;
+}
+
+.dropdown > *:last-child {
+  margin-bottom: 0px;
 }
 
 /*! Style the central element */
@@ -154,18 +164,20 @@ a {
   position: relative;
   margin: 0px;
   width: 50vw;
-  max-width: 400px;
+  min-width: 200px;
+  max-width: 450px;
   z-index: 0;
   transform: translate(0, -50px); /* Shift the center element slightly upward */
 }
 
 #center-title {
   width: fit-content;
+  max-width: max(50vw, 200px);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 10px 60px;
+  padding: 15px 40px;
   margin: 0px auto;
   background-color: var(--bright_white);
   transform-origin: center;
@@ -184,8 +196,12 @@ a {
   }
 }
 
+#center-title h1 {
+  margin-bottom: 10px;
+}
+
 #center-title > * {
-  margin: 10px 0px;
+  margin: 0px;
   width: fit-content;
 }
 

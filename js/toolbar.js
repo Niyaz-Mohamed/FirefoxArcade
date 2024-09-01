@@ -23,4 +23,39 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(startTime, 1000);
   }
   startTime();
+
+  // Trigger dropdowns
+  const dropdownBtns = document.querySelectorAll("#toolbar button");
+  dropdownBtns.forEach((dropBtn) => {
+    const dropdown = dropBtn.querySelector(".dropdown");
+    // Create a bounding element
+    const boundingElement = document.createElement("div");
+    boundingElement.style.position = "absolute";
+    boundingElement.style.zIndex = "-1";
+    boundingElement.style.background = "transparent";
+    // Calculate the dimensions and position of the bounding element
+    const buttonRect = dropBtn.getBoundingClientRect();
+    dropdown.style.display = "block";
+    const dropdownRect = dropdown.getBoundingClientRect();
+    dropdown.style.display = "none";
+    // Set absolute position of the bounding element relative to body
+    boundingElement.style.width = `${Math.max(
+      buttonRect.width,
+      dropdownRect.width
+    )}px`;
+    boundingElement.style.height = `${
+      buttonRect.height + dropdownRect.height
+    }px`;
+    boundingElement.style.top = `${buttonRect.top + window.scrollY}px`;
+    boundingElement.style.left = `${buttonRect.left + window.scrollX}px`;
+    document.body.appendChild(boundingElement);
+
+    // Add the required events
+    dropBtn.addEventListener("mouseenter", () => {
+      dropdown.style.display = "block";
+    });
+    boundingElement.addEventListener("mouseleave", () => {
+      dropdown.style.display = "none";
+    });
+  });
 });
