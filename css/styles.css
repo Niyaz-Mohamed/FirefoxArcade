@@ -174,8 +174,7 @@ a {
   position: absolute;
   z-index: 2;
   height: fit-content;
-  width: initial;
-  min-width: initial; /* TODO: Might cause issues later */
+  width: fit-content;
   background-color: var(--ui-bg-color);
   box-shadow: -5px 5px 0px 0px;
   font-size: 0.8em;

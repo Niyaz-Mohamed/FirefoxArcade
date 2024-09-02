@@ -1,9 +1,3 @@
-import { hideNongameElements, showNongameElements } from "./utils.js";
-
-//TODO: Testing only
-window.hideNongameElements = hideNongameElements;
-window.showNongameElements = showNongameElements;
-
 document.addEventListener("DOMContentLoaded", () => {
   // Start the clock
   function startTime() {

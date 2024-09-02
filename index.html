@@ -1,0 +1,31 @@
+<!--! File for Github Pages, copies startup.html for now -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Page</title>
+</head>
+
+<body style="margin: 0px;">
+    <iframe src="./startup.html" style="width: 100%; height: 100vh; border: none;"></iframe>
+    <script>
+        // Modify existing code
+        document.querySelector('iframe').addEventListener('load', function () {
+            // Access the content inside the iframe
+            let iframe = document.querySelector('iframe');
+            let iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+            iframeDoc.getElementById('settings').style.display = 'none';
+            iframeDoc.getElementById('game').style.display = 'none';
+            iframeDoc.querySelector('#explain-window .window-content p').innerHTML =
+                'Arcade is a browser extension which changes your startup page, ' +
+                'showing you a new page every reload with interesting arcade games! ' +
+                'Arcade is still in development, so check out its GitHub if you want ' +
+                'to try it!'; // TODO: Change name of extension here once it's decided
+        })
+    </script>
+</body>
+
+</html>

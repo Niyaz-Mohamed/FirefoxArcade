@@ -1,3 +1,9 @@
+//! Register all utilities under window
+window.arcade = {
+  hideNongameElements: hideNongameElements,
+  showNongameElements: showNongameElements,
+};
+
 //! Element fading
 // Elements that fade out when a game begins
 const fadeElements = [
