@@ -3,15 +3,21 @@
   /* Colors */
   --bright-yellow: #fab806;
   --deep-blue: #1d809f;
-  --deep-red: #d86425;
+  --deep-red: #d64532;
   --bright-white: #efeae1;
   --rich-black: #252525;
 
-  /* Utility definitions to actually use */
+  /* TODO: Colors to override depending on the game */
   --bg-color: var(--bright-yellow);
   --ui-bg-color: var(--bright-white);
   --ui-text-color: var(--rich-black);
+  --ui-shadow-color: var(--rich-black);
   --accent-color: var(--deep-blue);
+  /* Toolbar icon colors */
+  --github-color: green;
+  --explain-color: var(--bright-yellow);
+  --settings-color: var(--deep-blue);
+  --game-color: var(--deep-red);
 }
 
 * {
@@ -20,7 +26,6 @@
   box-sizing: border-box;
 }
 
-html,
 body {
   margin: 0;
   padding: 0;
@@ -34,9 +39,16 @@ body {
   cursor: crosshair; /*! Change if need be */
   position: relative;
   z-index: 0;
+  /* Initial color transtion */
+  transition-timing-function: ease-in-out;
+  transition-duration: 250ms;
+}
+
+#toolbar,
+#infobar,
+#center {
   transform-origin: center;
   transition-duration: 100ms;
-  transition-timing-function: ease-in-out;
 }
 
 h1,
@@ -87,8 +99,7 @@ a {
 
 /* For animated movements with center */
 .move-to-top {
-  top: 0%;
-  transform: translateY(-50%);
+  top: -5%;
 }
 
 .faded {
@@ -108,7 +119,7 @@ canvas {
   padding: 10px;
   margin: 20px;
   background-color: var(--ui-bg-color);
-  box-shadow: -5px 5px 0px 0px;
+  box-shadow: -5px 5px 0px 0px var(--ui-shadow-color);
   z-index: 2;
   display: flex;
   align-items: center;
@@ -175,6 +186,23 @@ canvas {
   color: var(--ui-bg-color);
 }
 
+/* Custom icons */
+#github svg:hover {
+  color: var(--github-color);
+}
+#explain svg:hover {
+  color: var(--explain-color);
+}
+#explain svg:hover {
+  color: var(--explain-color);
+}
+#settings svg:hover {
+  color: var(--settings-color);
+}
+#game svg:hover {
+  color: var(--game-color);
+}
+
 /*! Style Windows */
 .window {
   position: absolute;
@@ -182,7 +210,7 @@ canvas {
   height: fit-content;
   width: fit-content;
   background-color: var(--ui-bg-color);
-  box-shadow: -5px 5px 0px 0px;
+  box-shadow: -5px 5px 0px 0px var(--ui-shadow-color);
   font-size: 0.8em;
 }
 
@@ -213,7 +241,7 @@ canvas {
 }
 
 .window-content {
-  padding: 20px;
+  padding: 15px 20px;
 }
 
 .window-content > *:first-child {
@@ -230,7 +258,7 @@ canvas {
   min-width: 200px;
   max-width: 450px;
   z-index: 1;
-  transform: translate(-50%, calc(-50% - 40px)); /* Shift search slightly up */
+  transform: translate(-50%, calc(-50% - 30px)); /* Shift search slightly up */
 }
 
 #center-title {
@@ -243,7 +271,7 @@ canvas {
   padding: 15px 40px;
   margin: 0px auto;
   background-color: var(--ui-bg-color);
-  box-shadow: -10px 10px 0px 2px;
+  box-shadow: -10px 10px 0px 2px var(--ui-shadow-color);
   transform: rotate(5deg);
   animation: spin 2s infinite;
 }
@@ -265,8 +293,29 @@ canvas {
 
 #center-title:hover {
   color: var(--accent-color);
+  box-shadow: -10px 10px 0px 2px var(--accent-color);
 }
 
+#center-buttons {
+  margin-top: 20px;
+}
+
+#center-buttons button {
+  padding: 4px 2px;
+  background-color: var(--ui-text-color);
+  box-shadow: -4px 0 0 0 var(--ui-text-color), 4px 0 0 0 var(--ui-text-color),
+    0 -3px 0 0 var(--ui-text-color), 0 4px 0 0 var(--ui-text-color);
+  color: var(--ui-bg-color);
+  min-width: 80px;
+}
+
+#center-buttons button:hover {
+  background-color: var(--accent-color);
+  box-shadow: -4px 0 0 0 var(--accent-color), 4px 0 0 0 var(--accent-color),
+    0 -3px 0 0 var(--accent-color), 0 4px 0 0 var(--accent-color);
+}
+
+/* Style the searchbar and suggestions */
 #searchbar-container {
   margin-top: 50px;
   display: flex;
@@ -277,7 +326,9 @@ canvas {
   width: 100%;
   height: 25px;
   padding: 0px 10px;
-  box-shadow: -8px 0 0 0, 8px 0 0 0, 0 -8px 0 0, 0 8px 0 0;
+  box-shadow: -6px 0 0 0 var(--ui-shadow-color),
+    6px 0 0 0 var(--ui-shadow-color), 0 -6px 0 0 var(--ui-shadow-color),
+    0 6px 0 0 var(--ui-shadow-color);
   background-color: var(--ui-bg-color);
   font-family: "Pixelify Sans", sans-serif !important;
   font-weight: bold;
@@ -286,18 +337,18 @@ canvas {
 }
 
 #searchbar:focus {
-  box-shadow: -8px 0 0 0 var(--accent-color), 8px 0 0 0 var(--accent-color),
-    0 -8px 0 0 var(--accent-color), 0 8px 0 0 var(--accent-color);
+  box-shadow: -6px 0 0 0 var(--accent-color), 6px 0 0 0 var(--accent-color),
+    0 -6px 0 0 var(--accent-color), 0 6px 0 0 var(--accent-color);
 }
 
 #suggestions-list {
   width: 100%;
   margin-top: calc(
-    25px + 8px
+    25px + 6px
   ); /*TODO: Change depending on height of the searchbar*/
   background-color: var(--ui-bg-color);
-  box-shadow: -8px 0 0 0 var(--accent-color), 8px 0 0 0 var(--accent-color),
-    0 0 0 0, 0 8px 0 0 var(--accent-color);
+  box-shadow: -6px 0 0 0 var(--accent-color), 6px 0 0 0 var(--accent-color),
+    0 0 0 0, 0 6px 0 0 var(--accent-color);
   box-sizing: border-box;
   display: none;
   position: absolute;

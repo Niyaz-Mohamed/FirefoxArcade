@@ -5,7 +5,6 @@ window.arcade = {
 };
 
 //! Element fading
-// Elements that fade out when a game begins
 const fadeElements = [
   // document.getElementById("infobar"),
   document.getElementById("toolbar"),
@@ -18,9 +17,9 @@ const instantReappearElements = [
   document.getElementById("center-title"),
 ];
 
-export function hideNongameElements() {
+function hideNongameElements() {
   document.getElementById("searchbar").blur(); // Stop searching
-  const opacityFadeTime = 0.3; // For finetuning opacity fade times
+  const opacityFadeTime = 0.225; // For finetuning opacity fade times
   fadeElements.forEach((e) => {
     const tunedTime =
       e.id == "center-title" ? opacityFadeTime / 2 : opacityFadeTime; // Halve the time required for center-title
@@ -34,7 +33,7 @@ export function hideNongameElements() {
   document.getElementById("center").classList.add("move-to-top");
 }
 
-export function showNongameElements() {
+function showNongameElements() {
   // Force center title to appear first
   instantReappearElements.forEach((e) => {
     e.transition = "";

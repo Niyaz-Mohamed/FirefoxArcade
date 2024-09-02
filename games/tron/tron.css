@@ -1,3 +1,5 @@
 :root {
-  /* --bg-color: var(--deep-blue); */
+  --bg-color: #002b36;
+  --ui-shadow-color: #708588;
+  --accent-color: var(--deep-red);
 }
