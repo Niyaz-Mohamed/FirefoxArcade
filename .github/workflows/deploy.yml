@@ -1,0 +1,52 @@
+# This workflow is triggered by a push to the `main` branch
+# which it checks out, minifies the appropriate html/css/js
+# in-place, and pushes the changes to the `prod` branch
+
+# This workflow also needs to generate a zip and push it to firefox 
+# addon market in the future
+
+name: Minify
+
+on:
+  push:
+    branches:
+      - "main"
+
+permissions:
+  contents: write
+
+jobs:
+  checkout-minify-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Minification Tools
+        run: |
+          npm install -g terser csso-cli html-minifier-terser
+
+      - name: Minify HTML, CSS, and JS
+        run: |
+          # Minify HTML files
+          find . -name "*.html" -exec html-minifier-terser --collapse-whitespace --remove-comments --minify-js true --minify-css true --output {}.min {} \;
+          find . -name "*.html.min" -exec bash -c 'mv "$0" "${0%.min}"' {} \;
+
+          # Minify CSS files
+          find . -name "*.css" -exec csso --output {} {} \;
+
+          # Minify JavaScript files
+          find . -name "*.js" -exec terser --compress --mangle --output {} -- {} \;
+
+      - name: Deploy to gh-pages
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git checkout --orphan gh-pages
+          git reset
+          git add -f .
+          git commit -m "Deploy minified files to prod"
+          git push -f origin prod
+
+      - name: Return to main
+        run: git checkout main
