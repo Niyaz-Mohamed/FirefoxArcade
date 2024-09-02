@@ -2,7 +2,7 @@
 # which it checks out, minifies the appropriate html/css/js
 # in-place, and pushes the changes to the `prod` branch
 
-# This workflow also needs to generate a zip and push it to firefox 
+# This workflow also needs to generate a zip and push it to firefox
 # addon market in the future
 
 name: Minify
@@ -38,11 +38,11 @@ jobs:
           # Minify JavaScript files
           find . -name "*.js" -exec terser --compress --mangle --output {} -- {} \;
 
-      - name: Deploy to gh-pages
+      - name: Deploy to production
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git checkout --orphan gh-pages
+          git checkout --orphan prod
           git reset
           git add -f .
           git commit -m "Deploy minified files to prod"
