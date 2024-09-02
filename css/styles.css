@@ -95,6 +95,12 @@ a {
   opacity: 0;
 }
 
+/*! Base canvas styles */
+canvas {
+  width: 100vw;
+  height: 100vh;
+}
+
 /*! Style the infobar */
 .topbar {
   position: absolute;
