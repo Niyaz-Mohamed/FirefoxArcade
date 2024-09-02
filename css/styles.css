@@ -2,15 +2,16 @@
 :root {
   /* Colors */
   --bright-yellow: #fab806;
-  --deep_blue: #1d809f;
-  --deep_red: #d86425;
-  --bright_white: #efeae1;
+  --deep-blue: #1d809f;
+  --deep-red: #d86425;
+  --bright-white: #efeae1;
   --rich-black: #252525;
 
   /* Utility definitions to actually use */
-  --ui-bg-color: var(--bright_white);
+  --bg-color: var(--bright-yellow);
+  --ui-bg-color: var(--bright-white);
   --ui-text-color: var(--rich-black);
-  --accent-color: var(--deep_blue);
+  --accent-color: var(--deep-blue);
 }
 
 * {
@@ -25,19 +26,17 @@ body {
   padding: 0;
   width: 100vw;
   height: 100vh;
-  background-color: var(--bright-yellow);
-  color: var(--rich-black);
+  background-color: var(--bg-color);
+  color: var(--ui-text-color);
   font-family: "Pixelify Sans", sans-serif;
   font-weight: bold;
   text-align: center;
   cursor: crosshair; /*! Change if need be */
   position: relative;
-  z-index: -1;
-  /* Flex display for easy layout */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  z-index: 0;
+  transform-origin: center;
+  transition-duration: 100ms;
+  transition-timing-function: ease-in-out;
 }
 
 h1,
@@ -54,11 +53,11 @@ input {
 }
 
 a:link {
-  color: var(--rich-black);
+  color: var(--ui-text-color);
   text-decoration: none;
 }
 a:visited {
-  color: var(--rich-black);
+  color: var(--ui-text-color);
   text-decoration: underline;
 }
 
@@ -79,24 +78,78 @@ a {
   cursor: pointer;
 }
 
-/*! Style the toolbar */
-#toolbar {
+.center {
   position: absolute;
-  top: 0px;
-  right: 0px;
-  padding: 10px;
-  margin: 10px;
-  background-color: var(--bright_white);
-  box-shadow: -5px 5px 0px 0px;
-  display: flex;
-  align-items: flex-start;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
-#toolbar span {
+/* For animated movements with center */
+.move-to-top {
+  top: 0%;
+  transform: translateY(-50%);
+}
+
+.faded {
+  opacity: 0;
+}
+
+/*! Style the infobar */
+.topbar {
+  position: absolute;
+  top: 0px;
+  padding: 10px;
+  margin: 20px;
+  background-color: var(--ui-bg-color);
+  box-shadow: -5px 5px 0px 0px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+}
+
+#infobar {
+  left: 0px;
+  transform: rotate(-5deg);
+  padding: 5px 10px;
+}
+
+/*! Style the toolbar */
+#toolbar {
+  right: 0px;
+  transform: rotate(5deg);
+}
+
+.topbar span {
   display: inline-flex;
   align-items: center;
-  height: 1.5em;
   padding-right: 2px;
+}
+
+.topbar:hover {
+  box-shadow: -5px 5px 0px 0px var(--accent-color);
+}
+
+.topbar a:hover,
+.topbar svg:hover {
+  color: var(--accent-color);
+}
+
+.topbar svg:hover {
+  transform: rotate(5deg);
+}
+
+.topbar a,
+.topbar button,
+.topbar svg {
+  color: var(--ui-text-color);
+  position: relative;
+  display: inline-block;
+  height: 24px;
+}
+
+#clock {
+  margin-right: 5px;
 }
 
 #am-pm-container {
@@ -112,62 +165,67 @@ a {
 }
 
 .activetime {
-  background-color: var(--rich-black);
-  color: var(--bright_white);
-  border-radius: 2px;
+  background-color: var(--ui-text-color);
+  color: var(--ui-bg-color);
 }
 
-#toolbar:hover {
-  box-shadow: -5px 5px 0px 0px var(--deep_blue);
-}
-
-#toolbar a:hover,
-#toolbar svg:hover {
-  color: var(--deep_blue);
-}
-
-#toolbar > a,
-#toolbar > button {
-  color: var(--rich-black);
-  position: relative;
-  height: 1.5em;
-  width: 1.5em;
-}
-
-.dropdown {
+/*! Style Windows */
+.window {
   position: absolute;
-  top: calc(1.5em + 25px);
-  right: 0px;
-  padding: 10px;
+  z-index: 2;
   height: fit-content;
-  width: fit-content;
-  background-color: var(--bright_white);
+  width: initial;
+  min-width: initial; /* TODO: Might cause issues later */
+  background-color: var(--ui-bg-color);
   box-shadow: -5px 5px 0px 0px;
   font-size: 0.8em;
-  z-index: 3;
 }
 
-.dropdown:hover {
-  box-shadow: -5px 5px 0px 0px var(--deep_blue);
+.window:hover {
+  box-shadow: -5px 5px 0px 0px var(--accent-color);
+}
+.window:hover > .window-header {
+  background-color: var(--accent-color);
 }
 
-.dropdown > *:first-child {
+.window-header {
+  color: var(--ui-bg-color);
+  background-color: var(--ui-text-color);
+  padding: 10px 10px;
+  height: fit-content;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.window-delete {
+  position: absolute;
+  right: 7px;
+  height: 24px;
+  width: auto;
+  cursor: pointer;
+}
+
+.window-content {
+  padding: 20px;
+}
+
+.window-content > *:first-child {
   margin-top: 0px;
 }
 
-.dropdown > *:last-child {
+.window-content > *:last-child {
   margin-bottom: 0px;
 }
 
 /*! Style the central element */
 #center {
-  position: relative;
-  margin: 0px;
   width: 50vw;
   min-width: 200px;
   max-width: 450px;
-  z-index: 0;
-  transform: translate(0, -50px); /* Shift the center element slightly upward */
+  z-index: 1;
+  transform: translate(-50%, calc(-50% - 40px)); /* Shift search slightly up */
 }
 
 #center-title {
@@ -179,20 +237,15 @@ a {
   flex-direction: column;
   padding: 15px 40px;
   margin: 0px auto;
-  background-color: var(--bright_white);
-  transform-origin: center;
-  transition-duration: 100ms;
+  background-color: var(--ui-bg-color);
   box-shadow: -10px 10px 0px 2px;
-  animation: spin 2s ease-in-out infinite;
+  transform: rotate(5deg);
+  animation: spin 2s infinite;
 }
 
 @keyframes spin {
-  25% {
+  50% {
     transform: rotate(-5deg);
-  }
-
-  75% {
-    transform: rotate(5deg);
   }
 }
 
@@ -206,7 +259,7 @@ a {
 }
 
 #center-title:hover {
-  color: var(--deep_blue);
+  color: var(--accent-color);
 }
 
 #searchbar-container {
@@ -220,16 +273,16 @@ a {
   height: 25px;
   padding: 0px 10px;
   box-shadow: -8px 0 0 0, 8px 0 0 0, 0 -8px 0 0, 0 8px 0 0;
-  background-color: var(--bright_white);
+  background-color: var(--ui-bg-color);
   font-family: "Pixelify Sans", sans-serif !important;
   font-weight: bold;
   font-size: 1em;
-  caret-color: var(--deep_blue);
+  caret-color: var(--accent-color);
 }
 
 #searchbar:focus {
-  box-shadow: -8px 0 0 0 var(--deep_blue), 8px 0 0 0 var(--deep_blue),
-    0 -8px 0 0 var(--deep_blue), 0 8px 0 0 var(--deep_blue);
+  box-shadow: -8px 0 0 0 var(--accent-color), 8px 0 0 0 var(--accent-color),
+    0 -8px 0 0 var(--accent-color), 0 8px 0 0 var(--accent-color);
 }
 
 #suggestions-list {
@@ -237,9 +290,9 @@ a {
   margin-top: calc(
     25px + 8px
   ); /*TODO: Change depending on height of the searchbar*/
-  background-color: var(--bright_white);
-  box-shadow: -8px 0 0 0 var(--deep_blue), 8px 0 0 0 var(--deep_blue), 0 0 0 0,
-    0 8px 0 0 var(--deep_blue);
+  background-color: var(--ui-bg-color);
+  box-shadow: -8px 0 0 0 var(--accent-color), 8px 0 0 0 var(--accent-color),
+    0 0 0 0, 0 8px 0 0 var(--accent-color);
   box-sizing: border-box;
   display: none;
   position: absolute;
@@ -257,6 +310,6 @@ a {
 
 #suggestions-list .suggestion-item:hover,
 .selected-suggestion {
-  background-color: var(--deep_blue);
-  color: var(--bright_white) !important;
+  background-color: var(--accent-color);
+  color: var(--ui-bg-color) !important;
 }

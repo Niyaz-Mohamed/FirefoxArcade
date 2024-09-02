@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        return data[1].slice(5); // Return first 5 suggestions only
+        return data[1].slice(0, 5); // Return first 5 suggestions only
       });
   };
 
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   );
 
-  // Hide the shearch suggestions if focus lost
+  // Hide the search suggestions if focus lost
   searchbar.addEventListener("blur", () => {
     suggestionsList.style.display = "none";
   });
