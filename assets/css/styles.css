@@ -20,6 +20,20 @@
   --game-color: var(--deep-red);
 }
 
+@font-face {
+  font-family: "Pixelify Sans";
+  src: url("../fonts/pixelify-sans.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Karmatic Arcade";
+  src: url("../fonts/karmatic-arcade.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
 * {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -39,9 +53,7 @@ body {
   cursor: crosshair; /*! Change if need be */
   position: relative;
   z-index: 0;
-  /* Initial color transtion */
-  transition-timing-function: ease-in-out;
-  transition-duration: 250ms;
+  overflow: hidden;
 }
 
 #toolbar,
@@ -166,7 +178,7 @@ canvas {
 }
 
 #clock {
-  margin-right: 5px;
+  margin-right: 2px;
 }
 
 #am-pm-container {

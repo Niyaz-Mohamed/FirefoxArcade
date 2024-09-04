@@ -6,18 +6,22 @@ const selectedGame = "tron";
 fetch(`./games/${selectedGame}/${selectedGame}.html`)
   .then(response => response.text())
   .then(html => {
-    document.getElementById("game-container").innerHTML = html;
-
     // Load game-specific CSS
     const link = document.createElement("link");
     link.rel = "stylesheet";
     link.href = `./games/${selectedGame}/${selectedGame}.css`;
-    document.head.appendChild(link);
 
     // Load game-specific JavaScript
     const script = document.createElement("script");
     script.src = `./games/${selectedGame}/${selectedGame}.js`;
-    document.body.appendChild(script);
+
+    // Add elements to DOM
+    document.head.appendChild(link);
+    document.head.appendChild(script);
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById("game-container").innerHTML = html;
+    })
+    console.log('Game loaded: Tron')
   })
   .catch(error => {
     console.error('Error loading game:', error);

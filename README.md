@@ -2,4 +2,4 @@
 
 A unique startup page for firefox.
 
-![Startup Image](images/startup.png)
+![Startup Image](assets/images/startup.png)

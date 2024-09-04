@@ -6,23 +6,15 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0" />
     <meta name="description" content="Custom startup page" />
     <meta name="author" content="Mohamed Shahul Hameed Niyaz" />
-    <title>Custom Startup Page</title>
+    <title>Arkade</title>
     <!--Base for github pages-->
     <base href="./" target="_blank" />
     <!--Import resources-->
-    <link rel="icon" type="image/x-icon" href="./images/favicon.ico" />
-    <link rel="stylesheet" href="./css/styles.css" />
-    <!--Phaser.js-->
-    <!--TODO: Load via CDN-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"
-        integrity="sha512-zQK11u7QyhUWLmhK+Kyn4Oac0n2d5+AcuEiCagfm2YrGa2wMrdbj5EJammEmGU7bGnckmRoNTUT29Dl+DaRSlg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!--Karmatic Arcade Font (bold, highlighted text)-->
-    <link href="https://fonts.cdnfonts.com/css/karmatic-arcade" rel="stylesheet" />
-    <!--Pixelify Sans Font (For most text)-->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="./images/icon-48.png" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <!--Preload scripts-->
+    <script src="./libs/phaser.min.js"></script>
+    <script src="./js/loadGames.js"></script>
 </head>
 
 <body>
@@ -131,8 +123,6 @@
     <!--Attach Scripts-->
     <script src="./js/utils.js"></script>
     <script src="./js/setup.js"></script>
-    <!--Attach scripts to execute before css-->
-    <script src="./js/loadGames.js"></script>
 </body>
 
 </html>

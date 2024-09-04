@@ -109,6 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //! Handle searchbar setup
 document.addEventListener("DOMContentLoaded", () => {
+    // TODO: Update this based on the game
     document.querySelector("#center-buttons").onclick =
         window.arcade.hideNongameElements; // Add start action to buttons
 
@@ -116,6 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const searchbar = document.getElementById("searchbar");
     const suggestionsList = document.getElementById("suggestions-list");
     let selectedSuggestionIndex = 0;
+    searchbar.focus()
 
     // Search the query if enter is pressed
     searchbar.addEventListener("keydown", function (event) {
@@ -129,13 +131,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Fetch search suggestions from google
     const fetchSuggestions = (query) => {
-        // Example using a free search suggestions API
         //! Use cors proxy to bypass CORS error
         const cors = "https://corsproxy.io/?";
-        const url = encodeURI(
-            cors +
-            `https://suggestqueries.google.com/complete/search?client=firefox&q=${query}`
-        );
+        const url = `${cors}https://suggestqueries.google.com/complete/search?client=firefox&q=${encodeURIComponent(query)}`;
         return fetch(url)
             .then((response) => response.json())
             .then((data) => {
