@@ -118,8 +118,7 @@ a {
   opacity: 0;
 }
 
-/*! Base canvas styles */
-canvas {
+#game-container {
   width: 100vw;
   height: 100vh;
 }
@@ -280,7 +279,7 @@ canvas {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 15px 40px;
+  padding: 15px;
   margin: 0px auto;
   background-color: var(--ui-bg-color);
   box-shadow: -10px 10px 0px 2px var(--ui-shadow-color);
@@ -296,6 +295,10 @@ canvas {
 
 #center-title h1 {
   margin-bottom: 10px;
+}
+
+#center-title p {
+  font-size: 0.9em;
 }
 
 #center-title > * {

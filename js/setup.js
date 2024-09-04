@@ -119,18 +119,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let selectedSuggestionIndex = 0;
     searchbar.focus()
 
-    // Search the query if enter is pressed
-    searchbar.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            window.open(
-                "https://www.google.com/search?q=" + encodeURIComponent(searchbar.value)
-            );
-        }
-    });
-
+    //! Setup search suggestions
     // Fetch search suggestions from google
-    const fetchSuggestions = (query) => {
+    function fetchSuggestions(query) {
         //! Use cors proxy to bypass CORS error
         const cors = "https://corsproxy.io/?";
         const url = `${cors}https://suggestqueries.google.com/complete/search?client=firefox&q=${encodeURIComponent(query)}`;
@@ -145,11 +136,13 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Show suggestions in dropdown
-    const showSuggestions = (suggestions) => {
+    function showSuggestions(suggestions) {
         suggestionsList.innerHTML = "";
-        // Make the first suggestion the input value
+
+        // Make the first suggestion the input value and filter unique 
         if (!suggestions) suggestions = [];
         suggestions.unshift(searchbar.value);
+
         // Add each suggestion to the list
         suggestions.forEach((suggestion) => {
             const a = document.createElement("a");
@@ -172,7 +165,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (query) {
                 suggestionsList.style.display = "block";
                 fetchSuggestions(query).then((suggestions) => {
-                    showSuggestions(suggestions);
+                    // Filter to exclude current value
+                    showSuggestions(suggestions.filter(suggestion => suggestion != searchbar.value));
                 });
             } else {
                 suggestionsList.style.display = "none";
@@ -187,42 +181,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Cycle between suggestions using arrow keys
     searchbar.addEventListener("keydown", function (event) {
-        if (event.key === "ArrowUp" && suggestionsList.childElementCount > 1) {
+        if (['ArrowUp', 'ArrowDown'].includes(event.key) && suggestionsList.childElementCount > 1) {
             // Remove selected status from current suggestion
             const currentActive = suggestionsList.querySelector(
                 `:nth-child(${selectedSuggestionIndex + 1})`
             );
             currentActive.classList.remove("selected-suggestion");
 
-            // Update new selection
-            selectedSuggestionIndex = Math.abs(
-                (selectedSuggestionIndex - 1 + suggestionsList.childElementCount) %
-                suggestionsList.childElementCount
-            );
+            // Give the new selection a selected status
+            const change = event.key == 'ArrowUp' ? - 1 + suggestionsList.childElementCount : 1
+            selectedSuggestionIndex = (selectedSuggestionIndex + change) % suggestionsList.childElementCount
             const newActive = suggestionsList.querySelector(
                 `:nth-child(${selectedSuggestionIndex + 1})`
             );
             newActive.classList.add("selected-suggestion");
-            searchbar.value = newActive.innerHTML;
-        } else if (
-            event.key === "ArrowDown" &&
-            suggestionsList.childElementCount > 1
-        ) {
-            // Remove selected status from current suggestion
-            const currentActive = suggestionsList.querySelector(
-                `:nth-child(${selectedSuggestionIndex + 1})`
-            );
-            currentActive.classList.remove("selected-suggestion");
 
-            // Update new selection
-            selectedSuggestionIndex = Math.abs(
-                (selectedSuggestionIndex + 1) % suggestionsList.childElementCount
-            );
-            const newActive = suggestionsList.querySelector(
-                `:nth-child(${selectedSuggestionIndex + 1})`
-            );
-            newActive.classList.add("selected-suggestion");
+            // Update value of searchbar and move the cursor
             searchbar.value = newActive.innerHTML;
+            searchbar.selectionStart = searchbar.selectionEnd = searchbar.value.length;
+        }
+    });
+
+    //! Setup searchbar functionality
+    // Search the query if enter is pressed
+    searchbar.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            window.open(
+                "https://www.google.com/search?q=" + encodeURIComponent(searchbar.value)
+            );
         }
     });
 });

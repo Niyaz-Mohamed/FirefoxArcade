@@ -2,6 +2,7 @@
 window.arcade = {
   hideNongameElements: hideNongameElements,
   showNongameElements: showNongameElements,
+  createButton: createButton,
 };
 
 //! Element fading
@@ -42,4 +43,14 @@ function showNongameElements() {
   // Remove added classes
   document.getElementById("center").classList.remove("move-to-top");
   fadeElements.forEach((e) => e.classList.remove("faded"));
+}
+
+//! Adding game buttons
+function createButton(text, callback) {
+  const buttonContainer = document.getElementById('center-buttons')
+  const button = document.createElement("button");
+  button.innerHTML = text;
+  button.onclick = callback;
+  button.style.margin = '0px 8px';
+  buttonContainer.appendChild(button);
 }
